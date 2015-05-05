@@ -24,7 +24,11 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <url>http://wildfly.org</url>
+    <organization>
+        <name>sebastienfr</name>
+        <url>http://www.sebastienfr.fr/</url>
+    </organization>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -50,8 +54,8 @@
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 
         <!-- Define the version of the JBoss BOMs we want to import to specify tested stacks. -->
-        <version.jboss.bom>8.2.1.Final</version.jboss.bom>
-        <version.wildfly>9.0.0.Alpha1</version.wildfly>
+        <version.jboss.bom>8.2.0.Final</version.jboss.bom>
+        <version.wildfly>8.2.0.Final</version.wildfly>
 
 
         <!-- other plugin versions -->
@@ -64,7 +68,60 @@
         <!-- maven-compiler-plugin -->
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
+
+        <nexus.root.url>http://localhost:8082/nexus</nexus.root.url>
+        <!-- Test failure projects are automatically ignored. Set this parameter to false in order to pass it.
+         You can also set this parameter through command line by adding the -Dtest.skip=false option -->
+        <test.skip>false</test.skip>
+        <optionals.skip>false</optionals.skip>
+
     </properties>
+
+    <!--TODO scm>
+        <connection>scm:svn:svn://sapin5/home/svn/ds/trunk/</connection>
+        <developerConnection>scm:svn:svn://sapin5/home/svn/ds/trunk/</developerConnection>
+    </scm-->
+
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>${nexus.root.url}/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>${nexus.root.url}/content/groups/public/</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshots</name>
+            <url>${nexus.root.url}/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <name>Releases</name>
+            <url>${nexus.root.url}/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
